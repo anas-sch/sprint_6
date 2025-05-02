@@ -34,3 +34,18 @@ class MainPage(BasePage):
         if position == "bottom":
             self.scroll_to_element(locator)
         self.click_to_element(locator)
+
+    @allure.step('Переход по логотипу Самоката')
+    def click_scooter_logo(self):
+        self.click_to_element(MainPageLocators.SCOOTER_LOGO)
+
+    @allure.step('Переход по логотипу Яндекса')
+    def click_yandex_logo(self):
+        self.click_to_element(MainPageLocators.YANDEX_LOGO)
+        WebDriverWait(self.driver, 10).until(lambda d: len(d.window_handles) > 1)
+        self.driver.switch_to.window(self.driver.window_handles[-1])
+        WebDriverWait(self.driver, 10).until(EC.url_contains("dzen"))
+
+    @allure.step('Получение текущего URL')
+    def get_current_url(self):
+        return self.driver.current_url
